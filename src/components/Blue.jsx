@@ -10,18 +10,24 @@ Title: Blue Diamond - Free Giveaway
 import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useControls } from "leva";
+import { useFrame } from "@react-three/fiber";
 
 export default function Blue(props) {
+  const ref = useEef();
   const { nodes, materials } = useGLTF("/blue-transformed.glb");
   const { position } = useControls("Blue", {
     position: {
-      value: [0, 0, 0],
+      value: [-3, -0.5, 0],
       step: 0.1,
     },
   });
 
+  // useFrame(() => {
+  //   if (ref) ref.current.rotation.y += 0.01;
+  // });
+
   return (
-    <group scale={2} {...props} dispose={null}>
+    <group ref={ref} scale={2} position={position} {...props} dispose={null}>
       <mesh
         geometry={nodes.defaultMaterial.geometry}
         material={materials.DiamondOutside}
